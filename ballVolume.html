@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script> -->
+    <style>
+        body {
+            display : flex;
+            
+        }
+        #clear {
+            background-color: blue; 
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            width: 600px;
+        }
+        #calculate {
+            background-color: blue;
+            border-radius: 15px;
+        }
+        #drawingPannel {
+            border: blue 1px solid;
+            width : 600px
+        }
+        table {        
+         width: 100%;
+        }
+
+        td {
+          padding: 8px;
+          text-align: left;        
+        }
+        
+    </style>
+</head>
+<body>
+    <section>
+        <header>
+            <h1>Input Radius value and get the volume of sphere</h1>
+        </header>
+        <table>
+           <tr> <td><label for="radius">Radios</label></td></tr> 
+            <tr><td><input id="radius" type="number"></td></tr>
+            <tr><td>volume</td></tr>
+            <tr><td><span id='volume'></span</td>></tr>
+            <tr><td><button id="calculate">calculate</button></td></tr>
+        </table>
+    </section>
+<div id='drawingPannel'>
+    <canvas id="canvasBoard" width="600px" height="600px"></canvas>
+    <button id="clear">Clear</button>
+</div>
+    <script>
+        calcVolumeButton = document.getElementById('calculate')
+        clearCanvas = document.querySelector('#clear')
+        canvas =document.getElementById("canvasBoard")
+        cdb = canvas.getContext('2d')
+        x=300
+        y=300
+        calcVolumeButton.onclick = function(){
+            radius = +document.getElementById('radius').value
+            if ( radius){
+                if (radius <= maxRadius){
+                   showCircle(radius)
+                }else alert(`radius  is bigger then max alowwed ${maxRadius}`)
+            }else alert( 'please enter only numbers')
+        }
+        clearCanvas.addEventListener('click',function(){ // addEventListener
+            cdb.clearRect(0,0,600,600)
+            volumeResult.textContent =''
+            
+        })
+
+        window.onload = function(){
+            canvas =document.getElementById("canvasBoard")
+            cdb = canvas.getContext('2d')
+            x=300
+            y=300
+            radius = 1
+            maxRadius = 300
+            showCircles()
+        }
+        function showCircles(){
+            showCircle(radius)
+            radius++
+            radius++
+            radius++
+            if (radius <= maxRadius){
+                setTimeout(showCircles, 100)
+            }
+        }
+
+        function showCircle(radius){
+            volume = (4*(radius**3)*Math.PI)/3  ;   //Math.pow(x,y)
+            volumeResult = document.getElementById('volume');
+            volumeResult.textContent = volume ;
+            cdb.beginPath();
+            cdb.arc(x,y,radius,0,2*Math.PI)
+            cdb.strokeStyle = 'red'
+            cdb.stroke()
+            cdb.closePath()
+        }
+
+       
+    </script>
+</body>
+</html>
